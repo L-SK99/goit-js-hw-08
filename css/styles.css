@@ -1,0 +1,247 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: sans-serif;
+}
+
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* gallery grid */
+.gallery {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    line-height: 0;
+}
+
+.gallery-link {
+    display: block;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.gallery-image {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-link:hover .gallery-image {
+    filter: brightness(0.7);
+}
+
+/* override basicLightbox to use a semi-transparent white background
+   so the gallery is still visible behind the modal */
+.basicLightbox {
+    background: rgba(255, 255, 255, 0.85) !important;
+}
+
+.basicLightbox__placeholder {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* modal takes up the full screen as a flex column:
+   top bar on top, then a row with arrows on each side and image in the middle */
+.modal-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    flex-shrink: 0;
+}
+
+.modal-counter {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    font-size: 26px;
+    color: #1a1a1a;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: opacity 0.2s;
+}
+
+.modal-close:hover {
+    opacity: 0.5;
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    overflow: hidden;
+}
+
+.modal-arrow {
+    background: transparent;
+    border: none;
+    font-size: 36px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 0 20px;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: opacity 0.2s;
+    align-self: center;
+}
+
+.modal-arrow:hover {
+    opacity: 0.5;
+}
+
+.modal-container {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+    max-width: calc(100vw - 120px);
+    max-height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+.modal-img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 80px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* dark caption bar overlaid at the bottom of the photo */
+.modal-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    font-size: 14px;
+    font-family: sans-serif;
+    padding: 10px 14px;
+    line-height: 1.4;
+}
+
+/* slide animations for navigating between images — applied to the container
+   so the caption bar moves and fades together with the photo */
+.modal-container.slide-left {
+    animation: slideLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal-container.slide-right {
+    animation: slideRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-60px);
+        opacity: 0;
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(60px);
+        opacity: 0;
+    }
+}
+
+.modal-container.slide-in-left {
+    animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal-container.slide-in-right {
+    animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-60px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(60px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-image {
+        height: 160px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-image {
+        height: 220px;
+    }
+}
